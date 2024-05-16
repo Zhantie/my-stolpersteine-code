@@ -64,5 +64,4 @@ class LanguagePopupMenu extends ConsumerWidget {
     );
   }
 }
-
 ```
