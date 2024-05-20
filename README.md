@@ -19,14 +19,8 @@ https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/bbb9ffe8-c254-4
 ## Translation text
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
 
-### Language model met Riverpod
-Hier is de uitleg als één tekstblok:
-
----
-
-## Taalkeuze met Riverpod
-
-Deze code stelt een systeem in waarmee gebruikers de taal van de app kunnen kiezen. Er wordt gebruik gemaakt van de `flutter_riverpod` package om de toestand van de geselecteerde taal te beheren. De `Language` enum definieert drie talen: Engels, Frans en Nederlands. Elke taal heeft een vlag-emoji, een naam en een taalcode. De constructor van deze enum neemt drie vereiste parameters: `flag`, `name` en `code`. Daarnaast is er een `StateProvider` genaamd `languageProvider` die de huidige taal bijhoudt. De Standaard is de taal ingesteld op Engels.
+### Taalkeuze met Riverpod
+Deze code stelt een systeem in waarmee gebruikers de taal van de app kunnen kiezen. Er wordt gebruik gemaakt van de `flutter_riverpod` package om de toestand van de geselecteerde taal te beheren. De `Language` enum definieert drie talen: Engels, Frans en Nederlands. Elke taal heeft een vlag, naam en taalcode. De constructor van deze enum neemt drie vereiste parameters: `flag`, `name` en `code`. Daarnaast is er een `StateProvider` genaamd `languageProvider` die de huidige taal bijhoudt. De Standaard is de taal ingesteld op Engels.
 
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,7 +40,35 @@ enum Language {
 final languageProvider = StateProvider<Language>((ref) => Language.english);
 ```
 
+### Load Languge en save language
+
+Deze code zorgt ervoor dat de taalinstelling wordt geladen tijdens de splashscreen van de app, zodat de gebruiker niet opnieuw de taal hoeft te selecteren bij het opstarten. In de `initState` methode wordt de `loadLanguage` functie aangeroepen. Deze functie haalt de opgeslagen taal op uit `SharedPreferences` onder de naam `languageName`.
+
+```dart
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    loadLanguage();
+    load();
+  }
+
+  void loadLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageName = prefs.getString('language');
+
+    if (languageName != null) {
+      Language language = Provider.of<LanguageModel>(context, listen: false)
+          .getLanguageByName(languageName);
+      Provider.of<LanguageModel>(context, listen: false)
+          .changeLanguage(language);
+    }
+  }
+
+```
+
 ### popup menu taal
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +84,7 @@ class LanguagePopupMenu extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
         borderRadius:
-            BorderRadius.circular(10.0), // adjust the radius as needed
+            BorderRadius.circular(10.0), 
       ),
       padding: EdgeInsets.all(5.0),
       child: PopupMenuButton<Language>(
