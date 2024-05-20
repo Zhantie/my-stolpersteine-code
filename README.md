@@ -16,6 +16,59 @@ Moet nog geschreven worden...
 ## Victim Card & List
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/bbb9ffe8-c254-4c25-b3d4-cdfb06354358
 
+### Victimcard
+In mijn Victimcard haal ik de personen om door middel van de `person model` waarin de gegevens van de personen gedefineerd staan om opgehaald te worden, zoals `id`, `name`, `dateOfBirth`, `dateOfPassing`, `placeOfPassing` enzovoort.
+
+```dart
+...
+children: [
+          AutoSizeText(
+             person.name ?? "",
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+            maxFontSize: 14.0,
+            maxLines: 1,
+          ),
+          AutoSizeText(
+            // implement the date of placement
+            person.dateOfBirth ?? "",
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withAlpha(
+                        150,
+                      ),
+                ),
+            maxFontSize: 12.0,
+            maxLines: 1,
+          ),
+        ],
+...
+```
+
+### GridView
+De victimcard word weergeven in een gridView met een `crossAxisCount: 2`
+
+```dart
+GridView.count(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  physics: const ScrollPhysics(),
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 1 / 1.5,
+                  crossAxisSpacing: 10,
+                  children: [
+                    for (final Person person in persons)
+                      VictimCard(
+                        person: person,
+                      ),
+                  ],
+                )
+```
+
 ## Translation text
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
 
