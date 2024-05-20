@@ -1,6 +1,8 @@
 # my-stolpersteine-code
 Readme met code snippets waarin ik code snippets weergeef
 
+# Victim Card & List
+
 # Translation text
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
 ## Language model
@@ -66,5 +68,8 @@ class LanguagePopupMenu extends ConsumerWidget {
   }
 }
 ```
+
+# Material 3 design
+
 
 
