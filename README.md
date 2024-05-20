@@ -1,8 +1,9 @@
 # my-stolpersteine-code
 Readme met code snippets waarin ik code snippets weergeef
 
-
-***Language model***
+# Translation text
+https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
+## Language model
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +22,7 @@ enum Language {
 final languageProvider = StateProvider<Language>((ref) => Language.english);
 ```
 
-***popup menu taal***
+## popup menu taal
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,5 +66,5 @@ class LanguagePopupMenu extends ConsumerWidget {
   }
 }
 ```
-https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
+
 
