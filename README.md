@@ -68,6 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
 ```
 
 ### popup menu taal
+Deze code creëert een pop-up menu voor taalkeuze in een Flutter-app, waarbij `flutter_riverpod` wordt gebruikt om de geselecteerde taal te beheren. Het `LanguagePopupMenu` is een `ConsumerWidget` dat betekent dat het providers observeert en automatisch opnieuw opbouwd wanneer wanneer een provider veranderd word. Deze consumer widget zorgt ervoor dat de huidige een taal getoont word en gebruikers in staat stelt een andere taal te selecteren.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -112,6 +113,7 @@ class LanguagePopupMenu extends ConsumerWidget {
   }
 }
 ```
+De vertalingen moeten in `.arb` file terecht komen. in het geval van Stolpersteine heb ik dus 3 verschillende files genaamd `app_en.arb`, `app_fr.arb` en `app_nl.arb`. In deze files geef je de vertalingen mee die hardcoded zijn binnen de app.
 
 ## Material 3 design
 *Oude design*
@@ -124,10 +126,72 @@ class LanguagePopupMenu extends ConsumerWidget {
 <div style="display: flex; justify-content: space-around;">
     <img src="https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/6d0647ed-0bd9-45d0-9ef7-b51cce3f53ff" alt="shared image 2" style="width: 20%;">
     <img src="https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/1371c8c1-93ad-477e-81be-d69aac1d6e83" alt="shared image" style="width: 20%;">
-    <img src="https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/c31d3eef-b2be-4eb2-bc17-3e9b13b23a90" alt="shared image 3" style="width: 20%;">
 </div>
 
+### Navigation bar
+In een van de eerste versies van de app hebben wij als groep geen gebruik gemaakt van material design. aangezien het oude design niet meer up to date was zijn we verder gegaan met het design van Kyllian. Dit design is met Material 3 design ontworpen.
+Ik heb wat veranderingen toegepast door Material 3 design toe te passen aan de naviagtie balk. Een belangrijk onderdeel hiervan was dat doormiddel van Material 3 design gebruikers feedback hadden in de navigatie. De naam en icon word belicht waanneer deze pagina actief is.
 
+```dart
+@override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
+            (states) =>
+                _getTextStyle(context, states.contains(MaterialState.selected)),
+          ),
+          iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
+            (states) => _getIconThemeData(
+                context, states.contains(MaterialState.selected)),
+          ),
+        ),
+      ),
+      child: NavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        indicatorColor: Color.fromRGBO(39, 56, 55, 1.0),
+        destinations: <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: AppLocalizations.of(context)!.home,
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.map_outlined),
+            label: AppLocalizations.of(context)!.map,
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: AppLocalizations.of(context)!.settings,
+          ),
+        ],
+        selectedIndex: getRouteIndex() ?? 0,
+        onDestinationSelected: attemptPush,
+      ),
+    );
+  }
+```
+
+### Navigation bar State 
+
+Een belangerijk functie voor user feedback. Er word gekeken of de icon en tekst binnen de navigatie geselcteerd zijn, als dit niet het geval is dan word de icon en tekst door middel van een grijstint als niet actief weergeven, zo niet dat word deze als actief in kaart gebracht voor de gebruiker.
+
+```dart
+TextStyle _getTextStyle(BuildContext context, bool isSelected) {
+  final color = isSelected
+      ? Theme.of(context).colorScheme.secondary
+      : Colors.grey;
+  return (Theme.of(context).textTheme.bodySmall ?? const TextStyle())
+      .copyWith(color: color);
+}
+
+IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
+  final color = isSelected
+      ? Theme.of(context).colorScheme.secondary
+      : Colors.grey;
+  return IconThemeData(color: color);
+}
+```
 
 
 
