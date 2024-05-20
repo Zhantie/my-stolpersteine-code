@@ -48,7 +48,7 @@ children: [
 ...
 ```
 
-### GridView
+### Grid view
 De victimcard word weergeven in een gridView met een `crossAxisCount: 2`
 
 ```dart
