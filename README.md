@@ -1,14 +1,33 @@
 # Mijn Stolpersteine werkzaamheden
-Readme met code snippets waarin ik code snippets weergeef
+Readme met codesnippets waar ik tijdens het groeps project mee bezig ben geweest, daarnaast ook voorbeelden van het resultaat
+
+De werkzaamheden waaraan ik gewerkt heb zijn:
+* Map clustering
+* Victim Card & List
+* Translation text
+* Material 3 design
 
 ## Map clustering
+
+https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/3fb0b820-45c6-4a25-ba66-5b8b00b67049
+
+Moet nog geschreven worden...
+
 ## Victim Card & List
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/bbb9ffe8-c254-4c25-b3d4-cdfb06354358
 
 ## Translation text
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/ceb7c635-56b6-488d-938f-1c3db5247f93
 
-### Language model
+### Language model met Riverpod
+Hier is de uitleg als één tekstblok:
+
+---
+
+## Taalkeuze met Riverpod
+
+Deze code stelt een systeem in waarmee gebruikers de taal van de app kunnen kiezen. Er wordt gebruik gemaakt van de `flutter_riverpod` package om de toestand van de geselecteerde taal te beheren. De `Language` enum definieert drie talen: Engels, Frans en Nederlands. Elke taal heeft een vlag-emoji, een naam en een taalcode. De constructor van deze enum neemt drie vereiste parameters: `flag`, `name` en `code`. Daarnaast is er een `StateProvider` genaamd `languageProvider` die de huidige taal bijhoudt. De Standaard is de taal ingesteld op Engels.
+
 ```dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
