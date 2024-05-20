@@ -52,21 +52,21 @@ children: [
 De victimcard word weergeven in een gridView met een `crossAxisCount: 2`
 
 ```dart
-GridView.count(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  physics: const ScrollPhysics(),
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 1 / 1.5,
-                  crossAxisSpacing: 10,
-                  children: [
-                    for (final Person person in persons)
-                      VictimCard(
-                        person: person,
-                      ),
-                  ],
-                )
+     GridView.count(
+        padding: const EdgeInsets.only(bottom: 20.0),
+        physics: const ScrollPhysics(),
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        mainAxisSpacing: 10,
+        childAspectRatio: 1 / 1.5,
+        crossAxisSpacing: 10,
+        children: [
+          for (final Person person in persons)
+            VictimCard(
+              person: person,
+            ),
+        ],
+      )
 ```
 
 ## Translation text
