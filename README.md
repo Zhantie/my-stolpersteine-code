@@ -6,6 +6,8 @@ De werkzaamheden waaraan ik gewerkt heb zijn:
 * Victim Card & List
 * Translation text
 * Material 3 design
+* Fullscreen image
+* Changed Victim detail screen
 
 ## Map clustering
 
@@ -246,6 +248,8 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
 }
 ```
 
+## Fullscreen image
 
+## Changed Victim detail screen
 
 
