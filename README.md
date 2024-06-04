@@ -6,6 +6,7 @@ De werkzaamheden waaraan ik gewerkt heb zijn:
 * Victim Card & List
 * Translation text
 * Material 3 design
+* Reminder uploade Photo
 * Fullscreen image
 * Changed Victim detail screen
 
@@ -247,12 +248,96 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
   return IconThemeData(color: color);
 }
 ```
+## Reminder uploade Photo
 
+### Popup
+Deze popup moet ervoor zorgen dat gebruikers na elke 7 dagen een reminder krijgt dat hij of zij een nieuwe foto kan doorsturen met onze ingebouwde foto functie, mocht er geen foto aanwezig zijn of als de huidige foto outdated is.
+
+```dart
+void showCustomDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: AlertDialog(
+            insetPadding: const EdgeInsets.all(0.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            backgroundColor:
+                Theme.of(context).colorScheme.primary.withOpacity(0.6),
+            content: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Image.asset(
+                      "assets/images/arrow_camera.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10.0,
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context)!.popup_title,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.surface,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.popup_text,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+```
+### Timer Popup
+Deze timer zorgt ervoor dat de popup zodra deze de eerste keer weergeven is na 7 dagen week opnieuw zal verschijnen.
+```dart
+// timer for showing the dialog only once a week
+  Future<bool> timerShowDialog() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int lastShown = prefs.getInt('lastShown') ?? 0;
+    int now = DateTime.now().millisecondsSinceEpoch;
+    int oneWeekInMillis = 7 * 24 * 60 * 60 * 1000;
+
+    if (now - lastShown >= oneWeekInMillis) {
+      // Update the last shown time
+      await prefs.setInt('lastShown', now);
+      return true;
+    }
+    return false;
+  }
+```
 ## Fullscreen image
 
-
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/90f89b63-5232-43b1-b1b2-c482d485d29b
-
 
 ### Fullscreen widget
 Een belangerijke functie wat geraliseerd moest worden was de optie om de foto van de stenen die in de carousel weergeven zijn op volledig scherm te zien zijn, en dat gebruikers kunnen inzoomen om bepaalde details te zien.
