@@ -250,6 +250,75 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
 
 ## Fullscreen image
 
+### Fullscreen widget
+Een belangerijke functie wat geraliseerd moest worden was de optie om de foto van de stenen die in de carousel weergeven zijn op volledig scherm te zien zijn, en dat gebruikers kunnen inzoomen om bepaalde details te zien.
+Ik heb gebruik gemaakt van de package `photo_view: ^0.15.0 `
+
+```dart
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        centerTitle: true,
+        title: Text(AppLocalizations.of(context)!.gallery,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                )),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PhotoViewGallery.builder(
+              scrollPhysics: const BouncingScrollPhysics(),
+              builder: (BuildContext context, int index) {
+                return PhotoViewGalleryPageOptions(
+                  imageProvider:
+                      NetworkImage(widget.imageUrls[index].toString()),
+                  initialScale: PhotoViewComputedScale.contained * 0.8,
+                  heroAttributes: PhotoViewHeroAttributes(tag: index),
+                );
+              },
+              itemCount: widget.imageUrls.length,
+              loadingBuilder: (context, event) => Center(
+                child: CircularProgressIndicator(
+                  value: event == null || event.expectedTotalBytes == null
+                      ? null
+                      : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                ),
+              ),
+              backgroundDecoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+              ),
+              pageController: _pageController,
+            ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: ValueListenableBuilder<int>(
+                valueListenable: _pageNumberNotifier,
+                builder: (context, page, child) {
+                  return Text(
+                    "${page + 1}/${widget.imageUrls.length}",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+```
+
+### page indicator
+Om ervoor te zorgen ...
+
 ## Changed Victim detail screen
 
 
