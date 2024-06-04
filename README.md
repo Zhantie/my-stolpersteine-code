@@ -407,7 +407,7 @@ Widget build(BuildContext context) {
   }
 ```
 
-### page indicator
+### Image indicator
 De `_FullScreenImageGalleryState` klasse bevat een PageController en een `ValueNotifier<int>`. De `PageController` wordt gebruikt om door de afbeeldingen in de galerij te navigeren, terwijl de `ValueNotifier<int>` wordt gebruikt om de huidige pagina bij te houden. De `initState` methode wordt aangeroepen wanneer de widget voor het eerst wordt gecreëerd. Hier wordt de `PageController` geïnitialiseerd en een `listener` toegevoegd die de huidige pagina bijhoudt.
 De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier worden de `PageController` en `ValueNotifier` opgeruimd om ervoor te zorgen dat het geen geheugen gebruikt.
 
@@ -418,8 +418,8 @@ De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
-    _pageNumberNotifier = ValueNotifier<int>(0);
+    _pageController = PageController(initialPage: widget.startIndex);
+    _pageNumberNotifier = ValueNotifier<int>(widget.startIndex);
     _pageController.addListener(() {
       _pageNumberNotifier.value = _pageController.page!.round();
     });
@@ -432,6 +432,7 @@ De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier 
     super.dispose();
   }
 ```
+
 ## Changed Victim detail screen
 
 
