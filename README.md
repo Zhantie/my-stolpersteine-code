@@ -317,8 +317,28 @@ Widget build(BuildContext context) {
 ```
 
 ### page indicator
-Om ervoor te zorgen ...
+Om ervoor te zorgen 
+```dart
+  late final PageController _pageController;
+  late final ValueNotifier<int> _pageNumberNotifier;
 
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _pageNumberNotifier = ValueNotifier<int>(0);
+    _pageController.addListener(() {
+      _pageNumberNotifier.value = _pageController.page!.round();
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _pageNumberNotifier.dispose();
+    super.dispose();
+  }
+```
 ## Changed Victim detail screen
 
 
