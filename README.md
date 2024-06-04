@@ -250,6 +250,8 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
 ```
 ## Reminder uploade Photo
 
+https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/6e826dfc-a949-463f-820d-9d94cb0f40d6
+
 ### Popup
 Deze popup moet ervoor zorgen dat gebruikers na elke 7 dagen een reminder krijgt dat hij of zij een nieuwe foto kan doorsturen met onze ingebouwde foto functie, mocht er geen foto aanwezig zijn of als de huidige foto outdated is.
 
