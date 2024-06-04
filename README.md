@@ -250,6 +250,10 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
 
 ## Fullscreen image
 
+
+https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/90f89b63-5232-43b1-b1b2-c482d485d29b
+
+
 ### Fullscreen widget
 Een belangerijke functie wat geraliseerd moest worden was de optie om de foto van de stenen die in de carousel weergeven zijn op volledig scherm te zien zijn, en dat gebruikers kunnen inzoomen om bepaalde details te zien.
 Ik heb gebruik gemaakt van de package `photo_view: ^0.15.0 `. Door middel van `loadingBuilder` word de volgende image als deze nog niet geladen is door een loadingindicator word weergeven.
