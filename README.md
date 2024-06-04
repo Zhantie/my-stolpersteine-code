@@ -252,7 +252,7 @@ IconThemeData _getIconThemeData(BuildContext context, bool isSelected) {
 
 ### Fullscreen widget
 Een belangerijke functie wat geraliseerd moest worden was de optie om de foto van de stenen die in de carousel weergeven zijn op volledig scherm te zien zijn, en dat gebruikers kunnen inzoomen om bepaalde details te zien.
-Ik heb gebruik gemaakt van de package `photo_view: ^0.15.0 `
+Ik heb gebruik gemaakt van de package `photo_view: ^0.15.0 `. Door middel van `loadingBuilder` word de volgende image als deze nog niet geladen is door een loadingindicator word weergeven.
 
 ```dart
 Widget build(BuildContext context) {
@@ -317,7 +317,9 @@ Widget build(BuildContext context) {
 ```
 
 ### page indicator
-Om ervoor te zorgen 
+De `_FullScreenImageGalleryState` klasse bevat een PageController en een `ValueNotifier<int>`. De `PageController` wordt gebruikt om door de afbeeldingen in de galerij te navigeren, terwijl de `ValueNotifier<int>` wordt gebruikt om de huidige pagina bij te houden. De `initState` methode wordt aangeroepen wanneer de widget voor het eerst wordt gecreëerd. Hier wordt de `PageController` geïnitialiseerd en een `listener` toegevoegd die de huidige pagina bijhoudt.
+De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier worden de `PageController` en `ValueNotifier` opgeruimd om ervoor te zorgen dat het geen geheugen gebruikt.
+
 ```dart
   late final PageController _pageController;
   late final ValueNotifier<int> _pageNumberNotifier;
