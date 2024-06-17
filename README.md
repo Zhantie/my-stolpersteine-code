@@ -498,5 +498,139 @@ export default defineEventHandler(async (event) => {
   return { success: true, notification: result.data };
 });
 ```
+### Notification logica in app
+ik heb gebruik gemaakt van hashing om ervoor te zorgen de laatste hashwaarde van een opgeslagen melding geladen. Als de hash van de huidige melding overeenkomt met de laatste opgeslagen hash, wordt de melding niet weergegeven als de gebruiker hem weg klikt en zodra een nieuwe notificatie gestuurd word dan krijgt deze notificatie een nieuw hashcode waardoor deze weer weergeven word tot op het punt dat de gebruiker deze weg klikt.
 
+```dart
+import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stolpersteine_app/models/notification.dart';
+import 'package:stolpersteine_app/utils/uri_launcher.dart';
+
+class NotificationWidget extends StatefulWidget {
+  const NotificationWidget({
+    super.key,
+    required this.notificationMessage,
+  });
+
+  final NotificationMessage? notificationMessage;
+
+  @override
+  State<NotificationWidget> createState() => _NotificationWidgetState();
+}
+
+class _NotificationWidgetState extends State<NotificationWidget> {
+  bool isVisible = true;
+  String? lastHash;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLastHash();
+  }
+
+  _loadLastHash() async {
+    final prefs = await SharedPreferences.getInstance();
+    lastHash = prefs.getString('lastHash');
+    if (widget.notificationMessage != null) {
+      final hash = widget.notificationMessage!.toMd5Hash();
+      if (hash == lastHash) {
+        setState(() {
+          isVisible = false;
+        });
+      } else {
+        print('Notification hash: $hash');
+        // _saveLastHash(hash);
+      }
+    }
+  }
+
+  _saveLastHash(String hash) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('lastHash', hash);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return !isVisible || widget.notificationMessage == null
+        ? const SizedBox()
+        : GestureDetector(
+            onTap: () => UriLauncher.launch(widget.notificationMessage!.href!),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20.0,
+                    top: 20.0,
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AutoSizeText(
+                              widget.notificationMessage!.title?.get(context) ??
+                                  '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                              maxLines: 1,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isVisible = false;
+                                  _saveLastHash(
+                                      widget.notificationMessage!.toMd5Hash());
+                                });
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          widget.notificationMessage!.message?.get(context) ??
+                              '',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+}
+```
 
