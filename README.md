@@ -9,6 +9,7 @@ De werkzaamheden waaraan ik gewerkt heb zijn:
 * Reminder uploade Photo
 * Fullscreen image
 * Changed Victim detail screen
+* In-app Notification
 
 ## Map clustering
 
