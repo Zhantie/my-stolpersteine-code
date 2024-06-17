@@ -436,6 +436,21 @@ De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier 
 ## In-app Notification
 
 ### Notifaction API
+#### GET
+hier wordt een event handler gedefinieerd die een JSON-bestand leest en de inhoud terugstuurd. Het bestand `notification.json` wordt ingelezen vanuit de map public. De inhoud van het bestand wordt geparsed van JSON-string naar een JavaScript-object.
+```typescript
+import { promises as fs } from 'fs';
+import { join } from 'path';
+
+export default defineEventHandler(async (event) => {
+  const filePath = join(process.cwd(),"public", 'notification.json');
+  const data = await fs.readFile(filePath, 'utf-8');
+  const notifications = JSON.parse(data);
+  return notifications;
+});
+```
+
+#### POST
 In deze code wordt een event handler gedefinieerd die JSON-data valideert, vertaalt en opslaat in een bestand. ik maak gebruikt van de Zod-bibliotheek om de structuur van de JSON-data te valideren. Indien de validatie slaagt, worden de titel en het bericht vertaald en samen met de href opgeslagen in `notification.json`. Bij een ongeldige request data wordt een foutmelding geretourneerd.
 ```typescript
 import { z } from "zod";
