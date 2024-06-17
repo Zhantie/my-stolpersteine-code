@@ -8,7 +8,6 @@ De werkzaamheden waaraan ik gewerkt heb zijn:
 * Material 3 design
 * Reminder uploade Photo
 * Fullscreen image
-* Changed Victim detail screen
 * In-app Notification
 
 ## Map clustering
@@ -434,6 +433,55 @@ De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier 
   }
 ```
 
-## Changed Victim detail screen
+## In-app Notification
+
+### Notifaction API
+In deze code wordt een event handler gedefinieerd die JSON-data valideert, vertaalt en opslaat in een bestand. ik maak gebruikt van de Zod-bibliotheek om de structuur van de JSON-data te valideren. Indien de validatie slaagt, worden de titel en het bericht vertaald en samen met de href opgeslagen in `notification.json`. Bij een ongeldige request data wordt een foutmelding geretourneerd.
+```typescript
+import { z } from "zod";
+import { promises as fs } from "fs";
+import { join } from "path";
+import { default as ITranslatedText } from "~/models/translated_text";
+
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
+  const result = z
+    .object({
+      title: z.string(),
+      message: z.string(),
+      href: z.string(),
+    })
+    .safeParse(body);
+
+  if (!result.success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request data",
+    });
+  }
+
+  const translatedName = await ITranslatedText.create({
+    nl: result.data.title,
+  });
+
+  const translatedMessage = await ITranslatedText.create({
+    nl: result.data.message,
+  });
+
+  const filePath = join(process.cwd(),"public","notification.json");
+  // const data = await fs.readFile(filePath, "utf-8");
+  // const notifications = JSON.parse(data);
+  // notifications.push(result.data);
+  const notifications = {
+    title: translatedName,
+    message: translatedMessage,
+    href: result.data.href,
+  };
+
+  await fs.writeFile(filePath, JSON.stringify(notifications, null, 2));
+
+  return { success: true, notification: result.data };
+});
+```
 
 
