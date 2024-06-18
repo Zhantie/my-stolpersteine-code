@@ -499,7 +499,7 @@ export default defineEventHandler(async (event) => {
 });
 ```
 ### Notification logica in app
-ik heb gebruik gemaakt van hashing om ervoor te zorgen de laatste hashwaarde van een opgeslagen melding geladen. Als de hash van de huidige melding overeenkomt met de laatste opgeslagen hash, wordt de melding niet weergegeven als de gebruiker hem weg klikt en zodra een nieuwe notificatie gestuurd word dan krijgt deze notificatie een nieuw hashcode waardoor deze weer weergeven word tot op het punt dat de gebruiker deze weg klikt.
+Ik heb gebruik gemaakt van hashing om ervoor te zorgen de laatste hashwaarde van een opgeslagen melding word geladen. Als de hash van de huidige melding overeenkomt met de laatste opgeslagen hash, wordt de melding niet weergegeven als de gebruiker hem weg klikt en zodra een nieuwe notificatie gestuurd word dan krijgt deze notificatie een nieuw hashcode waardoor deze weer weergeven word tot op het punt dat de gebruiker deze weg klikt.
 
 ```dart
 import 'dart:convert';
