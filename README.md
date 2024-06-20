@@ -14,8 +14,6 @@ De werkzaamheden waaraan ik gewerkt heb zijn:
 
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/3fb0b820-45c6-4a25-ba66-5b8b00b67049
 
-Moet nog geschreven worden...
-
 ## Victim Card & List
 https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/bbb9ffe8-c254-4c25-b3d4-cdfb06354358
 
@@ -434,6 +432,10 @@ De `dispose` methode wordt aangeroepen wanneer de widget wordt verwijderd. Hier 
 ```
 
 ## In-app Notification
+
+
+https://github.com/Zhantie/my-stolpersteine-code/assets/74553048/801b061a-1bd8-4a4a-904f-967f0416443c
+
 
 ### Notifaction API
 #### GET
